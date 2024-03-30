@@ -1,0 +1,61 @@
+/* categorie Input Styles */
+.categorie-input {
+  max-height: 45px;
+  --container_width: min(87.5vw, 450px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: var(--prim);
+  color: var(--text);
+  width: var(--container_width);
+  overflow: hidden;
+  border: none;
+}
+
+.categorie-input div {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  font-weight: 600;
+  letter-spacing: 0px;
+}
+
+.selection {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: calc(var(--container_width) / 2);
+  z-index: 0;
+  left: 0;
+  top: 0;
+  transition: 0.3s ease;
+}
+
+.categorie-input .selectCategorie ~ .selection {
+  display: inline-block;
+}
+
+.categorie-input .selectCategorie:nth-child(1) ~ .selection {
+  transform: translateX(calc(var(--container_width) * 0 / 2));
+}
+
+.categorie-input .selectCategorie:nth-child(2) ~ .selection {
+  transform: translateX(calc(var(--container_width) * 1 / 2));
+}
+
+.categorie-input .pink ~ .selection {
+  background-color: var(--pink);
+}
+.categorie-input .blue ~ .selection {
+  background-color: #0441b3;
+}
+.categorie-input .white ~ .selection {
+  background-color: white;
+}
+.categorie-input .white {
+  color: black;
+}

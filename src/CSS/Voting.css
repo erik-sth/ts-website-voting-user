@@ -1,0 +1,45 @@
+.voted-c {
+  margin: 25vh auto;
+  max-width: 60%;
+  min-width: fit-content;
+  padding: 30px 50px;
+  border-radius: 10px;
+  font-size: medium;
+  border: 1px solid grey;
+  background-color: rgba(0, 0, 0, 0.336);
+}
+.body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+footer {
+  padding: 5px 0;
+}
+
+.vote-btn {
+  width: 90vw;
+  max-width: 100%;
+  background-color: var(--select);
+}
+.vote-btn:hover {
+  background-color: var(--select-hover);
+}
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.container > * {
+  margin: 3px;
+}
