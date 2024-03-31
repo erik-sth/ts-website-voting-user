@@ -76,7 +76,7 @@ const Voting = () => {
     {    loading && <div>Loading...</div>}
       {
        display !== "voting" && (<div className="voted-c"> 
-        {display === "voted" && currentVoted && currentVoted?.name}
+        {display === "voted" && currentVoted && `Du hast abgestimmt für ${currentVoted?.name}.`}
         {display === "closed" && closedMessage}
         {display === "spam" && "Spam detected. Stop spamming."}
       </div>)}
