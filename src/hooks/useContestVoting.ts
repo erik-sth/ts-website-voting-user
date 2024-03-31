@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AxiosError } from "axios";
-import apiClient from "../../services/api-client";
+import apiClient from "../services/api-client";
 import { LocalStorageManager } from "./LocalStorageManager";
-import { arraysHaveSameValues } from "../../utils/array";
+import { arraysHaveSameValues } from "../utils/array";
 
 export interface Contestant {
   _id: string;

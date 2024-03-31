@@ -1,4 +1,4 @@
-import { Contestant } from "../../hooks/voting/useContestant";
+import { Contestant } from "../../hooks/useContestant";
 import "./SelectContestant.css";
 
 interface Props {

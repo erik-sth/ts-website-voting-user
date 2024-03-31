@@ -1,5 +1,5 @@
 import "./SelectCategorie.css";
-import { Categories } from "../../hooks/useProject";
+import { Categories } from "../../project.types";
 interface Props {
   selectedCategories: string[];
   categorie: Categories;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { arraysHaveSameValues } from "../../utils/array";
+import { arraysHaveSameValues } from "../utils/array";
 
 export interface Contestant {
   _id: string;

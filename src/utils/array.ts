@@ -18,10 +18,3 @@ export function arraysHaveSameValues<T>(array1: T[], array2: T[]): boolean {
   // If all elements match, the arrays have the same values
   return true;
 }
-export function hasAllValues(
-  mainArray: string[],
-  valuesToCheck: string[]
-): boolean {
-  // Use every to check if every value in valuesToCheck is included in mainArray
-  return valuesToCheck.every((value) => mainArray.includes(value));
-}

@@ -1,12 +1,12 @@
 import SelectCategorie from "./components/Voting/SelectCategorie";
 import Voted from "./voting/Voted";
 import SelectContestant from "./components/Voting/SelectContestant";
-import useVoting from "./hooks/voting/VotingPageManager";
-import "./CSS/Voting.css";
+import useVoting from "./hooks/VotingPageManager";
+import "./Voting.css";
 import SpammingDetected from "./voting/SpammingDetected";
 import SearchBox from "./components/SearchBox";
 import { useCallback, useEffect, useState } from "react";
-import { Contestant } from "./hooks/useProject";
+import { Contestant } from "./project.types";
 
 const Voting = () => {
   const {

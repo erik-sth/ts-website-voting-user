@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Categories, Project } from "../useProject";
+import { Categories, Project } from "../project.types";
 
 export interface Contestant {
   _id: string;

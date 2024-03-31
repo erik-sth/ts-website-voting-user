@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiClient from "../../services/api-client";
+import apiClient from "../services/api-client";
 import useContestant from "./useContestant";
 import useContestVoting from "./useContestVoting";
 import CategoriesProvider from "./CategoriesProvider";
