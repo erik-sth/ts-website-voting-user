@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import useContestant from "./useContestant";
-import useContestVoting from "./useContestVoting";
+import useContestantVoting from "./useContestantVoting";
 import CategoriesProvider from "./CategoriesProvider";
 
 export interface Contestant {
@@ -11,8 +11,9 @@ export interface Contestant {
 }
 
 const useVoting = () => {
-  const [projectId, setProjectId] = useState<string>(""); // State to store projectId
-
+  const [projectId, setProjectId] = useState<string>(""); 
+  const [closedMessage, setClosedMessage] = useState<string>(""); 
+ 
   useEffect(() => {
     const url = window.location.href;
     const lastSlashIndex = url.lastIndexOf("/");
@@ -32,7 +33,7 @@ const useVoting = () => {
     changeSelectedContestantPerCategorie,
   } = useContestant(selectedCategories);
 
-  const { currentVoted, display, setDisplay, vote } = useContestVoting(
+  const { currentVoted, display, setDisplay, vote } = useContestantVoting(
     selectedCategories,
     contestants,
     currentSelected, 
@@ -49,10 +50,16 @@ const useVoting = () => {
           setCategories(response.data.project.categories);
         })
         .catch((error) => {
-          if (error.response?.status === 429) {
-            setDisplay("spam");
+          switch (error?.response?.status) {
+            case 429:
+              setDisplay("spam");
+              break;
+          
+            case 403:
+              setDisplay("closed")
+              setClosedMessage(error.response.data)
+              break;
           }
-          console.error("Error fetching contestants and project:", error);
         });
     }
   }, [projectId, setCategories, setContestant, setDisplay]);
@@ -66,6 +73,7 @@ const useVoting = () => {
     currentSelected,
     storeSelectedPerCategorie,
     setNewCategorie,
+    closedMessage,
     changeSelectedContestantPerCategorie,
     currentVoted,
   };

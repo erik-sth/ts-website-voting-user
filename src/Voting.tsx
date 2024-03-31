@@ -19,6 +19,7 @@ const Voting = () => {
     changeSelectedContestantPerCategorie,
     setNewCategorie,
     currentVoted,
+    closedMessage
   } = useVoting();
   const [filteredContestant, setFilteredContestant] = useState<Contestant[]>(
     []
@@ -60,7 +61,7 @@ const Voting = () => {
             />
           ))}
       </nav>
-      {renderData.length > 25 && (
+      {renderData?.length > 25 && (
         <SearchBox onSearch={filterContestantsByName} />
       )}
       <section className="main">
@@ -76,10 +77,8 @@ const Voting = () => {
         {display === "voted" && currentVoted && (
           <Voted name={currentVoted?.name} />
         )}
+        {display === "closed" && <div className="voted-c">{closedMessage}</div>}
         {display === "spam" && <SpammingDetected />}
-        {display === "banned" && (
-          <div className="voted-c">Already voted from this device.</div>
-        )}
       </section>
       <footer className="container">
         {currentSelected && display === "voting" && !currentVoted && (

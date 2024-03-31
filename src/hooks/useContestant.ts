@@ -26,7 +26,7 @@ const useContestant = (selectedCategories: string[]) => {
   // filter render data after categorie change or loading data
   useEffect(() => {
     setRenderData(
-      contestants.filter((c) =>
+      contestants?.filter((c) =>
         arraysHaveSameValues(c.categories, selectedCategories)
       )
     );
