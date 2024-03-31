@@ -13,6 +13,7 @@ export interface Contestant {
 const useVoting = () => {
   const [projectId, setProjectId] = useState<string>(""); 
   const [closedMessage, setClosedMessage] = useState<string>(""); 
+  const [loading, setLoading] = useState(false);
  
   useEffect(() => {
     const url = window.location.href;
@@ -43,13 +44,16 @@ const useVoting = () => {
   //load data
   useEffect(() => {
     if (projectId) {
+      setLoading(true)
       apiClient
         .get(`/contestant/${projectId}`)
         .then((response) => {
           setContestant(response.data.results);
           setCategories(response.data.project.categories);
+          setLoading(false)
         })
         .catch((error) => {
+      
           switch (error?.response?.status) {
             case 429:
               setDisplay("spam");
@@ -60,6 +64,7 @@ const useVoting = () => {
               setClosedMessage(error.response.data)
               break;
           }
+          setLoading(false)
         });
     }
   }, [projectId, setCategories, setContestant, setDisplay]);
@@ -76,6 +81,7 @@ const useVoting = () => {
     closedMessage,
     changeSelectedContestantPerCategorie,
     currentVoted,
+    loading
   };
 };
 

@@ -17,7 +17,8 @@ const Voting = () => {
     changeSelectedContestantPerCategorie,
     setNewCategorie,
     currentVoted,
-    closedMessage
+    closedMessage,
+    loading
   } = useVoting();
   const [filteredContestant, setFilteredContestant] = useState<Contestant[]>(
     []
@@ -72,11 +73,13 @@ const Voting = () => {
             />
           </section>
         )}
-       <div className="voted-c"> 
+    {    loading && <div>Loading...</div>}
+      {
+       display !== "voting" && (<div className="voted-c"> 
         {display === "voted" && currentVoted && currentVoted?.name}
         {display === "closed" && closedMessage}
         {display === "spam" && "Spam detected. Stop spamming."}
-      </div>
+      </div>)}
       </section>
       <footer className="container">
         {currentSelected && display === "voting" && !currentVoted && (
