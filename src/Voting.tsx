@@ -1,9 +1,7 @@
 import SelectCategorie from "./components/Voting/SelectCategorie";
-import Voted from "./voting/Voted";
 import SelectContestant from "./components/Voting/SelectContestant";
 import useVoting from "./hooks/VotingPageManager";
 import "./Voting.css";
-import SpammingDetected from "./voting/SpammingDetected";
 import SearchBox from "./components/SearchBox";
 import { useCallback, useEffect, useState } from "react";
 import { Contestant } from "./project.types";
@@ -74,11 +72,11 @@ const Voting = () => {
             />
           </section>
         )}
-        {display === "voted" && currentVoted && (
-          <Voted name={currentVoted?.name} />
-        )}
-        {display === "closed" && <div className="voted-c">{closedMessage}</div>}
-        {display === "spam" && <SpammingDetected />}
+       <div className="voted-c"> 
+        {display === "voted" && currentVoted && currentVoted?.name}
+        {display === "closed" && closedMessage}
+        {display === "spam" && "Spam detected. Stop spamming."}
+      </div>
       </section>
       <footer className="container">
         {currentSelected && display === "voting" && !currentVoted && (
