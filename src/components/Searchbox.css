@@ -1,24 +1,24 @@
 /* Your existing styles */
 
 .input-group {
-  border: 1px solid grey;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
+	border: 1px solid grey;
+	border-radius: 30px;
+	display: flex;
+	align-items: center;
 }
 
 .search-icon {
-  padding: 10px;
+	padding: 10px;
 }
 
 input {
-  border: none;
-  background: transparent;
-  padding: 10px;
-  width: 100%;
-  outline: none;
+	border: none;
+	background: transparent;
+	padding: 10px;
+	width: 100%;
+	outline: none;
 }
 
 .input-group:focus-within {
-  outline: 1px solid white;
+	outline: 1px solid white;
 }
