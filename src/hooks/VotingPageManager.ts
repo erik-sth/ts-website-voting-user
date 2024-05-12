@@ -4,7 +4,6 @@ import CategoriesProvider from './CategoriesProvider';
 import axios from 'axios';
 import { LocalStorageManager } from './LocalStorageManager';
 import useContestant from './useContestant';
-import { arraysHaveSameValues } from '../utils/array';
 import { Categories } from '../types/project';
 import { page } from '../types/page';
 
@@ -20,24 +19,15 @@ const VotingPageManager = () => {
 		storeSelectedPerCategory,
 	} = useContestant(selectedCategories);
 	const [display, setDisplay] = useState<page>('loadingPage');
-	const [storeVotedPerCategory, setStoreVotedPerCategorie] = useState<
-		{ categories: string[]; contestantName: string }[]
-	>([]);
 	const [closedMessage, setClosedMessage] = useState('');
-	const [currentVoted, setCurrentVoted] = useState<string>();
 	const manageLocalStorage = new LocalStorageManager(projectId as string);
 	useEffect(() => {
-		const name = storeVotedPerCategory.find((v) =>
-			arraysHaveSameValues(v.categories, selectedCategories)
-		);
-		if (name) {
-			setCurrentVoted(name?.contestantName);
+		if (currentSelected?.votedName) {
 			setDisplay('votedPage');
 		} else {
 			setDisplay('votingPage');
-			setCurrentVoted(undefined);
 		}
-	}, [selectedCategories, storeVotedPerCategory, renderData]);
+	}, [selectedCategories, renderData]);
 
 	useEffect(() => {
 		const id = getProjectId();
@@ -58,13 +48,12 @@ const VotingPageManager = () => {
 				solution.forEach((s) => {
 					const res = manageLocalStorage.getVoted(s.split(''));
 					if (res)
-						setStoreVotedPerCategorie((prev) => [
-							...prev,
-							{
-								contestantName: res,
-								categories: s.split(''),
-							},
-						]);
+						changeSelectedContestantPerCategory( 	{
+							_id: "fromLocalStorage",
+							categories: s.split(""),
+							name: res || "",
+							votedName: res,
+							});
 				});
 				getContestants(projectId);
 			} catch (error: unknown) {
@@ -87,9 +76,7 @@ const VotingPageManager = () => {
 				default:
 					setDisplay('errorLoadingPage');
 			}
-		} else {
-			// Handle other types of errors
-		}
+		} 
 	}, []);
 
 	function backtrack(
@@ -162,13 +149,9 @@ const VotingPageManager = () => {
 					selectedCategories
 				);
 
-				setStoreVotedPerCategorie([
-					...storeVotedPerCategory,
-					{
-						categories: selectedCategories,
-						contestantName: currentSelected.name,
-					},
-				]);
+				changeSelectedContestantPerCategory(
+				{_id: currentSelected._id,  categories: selectedCategories, name: currentSelected.name, votedName: currentSelected.name}	
+				);
 			})
 			.catch(handleErrors);
 	}
@@ -182,8 +165,6 @@ const VotingPageManager = () => {
 		setNewCategory,
 		vote,
 		changeSelectedContestantPerCategory,
-		storeVotedPerCategory,
-		currentVoted,
 		closedMessage,
 	};
 };

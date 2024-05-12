@@ -16,7 +16,6 @@ const Voting = () => {
 		renderData,
 		selectedCategories,
 		currentSelected,
-		currentVoted,
 		closedMessage,
 		changeSelectedContestantPerCategory,
 		setNewCategory,
@@ -77,8 +76,8 @@ const Voting = () => {
 				{display !== 'votingPage' && (
 					<div className='voted-c'>
 						{display === 'votedPage' &&
-							currentVoted &&
-							`Du hast abgestimmt für ${currentVoted}.`}
+							currentSelected?.votedName &&
+							`Du hast abgestimmt für ${currentSelected.votedName}.`}
 						{display === 'errorLoadingPage' && closedMessage}
 						{display === 'spamPage' &&
 							'Spam detected. Stop spamming.'}
@@ -97,7 +96,7 @@ const Voting = () => {
 			<footer className='container'>
 				{currentSelected &&
 					display === 'votingPage' &&
-					!currentVoted && (
+					!currentSelected.votedName && (
 						<div>
 							<p>Änderung der Wahl nicht möglich.</p>
 							<button className='vote-btn' onClick={vote}>
