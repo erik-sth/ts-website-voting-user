@@ -1,5 +1,5 @@
-/* categorie Input Styles */
-.categorie-input {
+/* category Input Styles */
+.category-input {
 	max-height: 45px;
 	--container_width: min(87.5vw, 450px);
 	position: relative;
@@ -13,7 +13,7 @@
 	border: none;
 }
 
-.categorie-input div {
+.category-input div {
 	width: 100%;
 	padding: 10px;
 	display: flex;
@@ -35,27 +35,27 @@
 	transition: 0.3s ease;
 }
 
-.categorie-input .selectCategorie ~ .selection {
+.category-input .selectCategory ~ .selection {
 	display: inline-block;
 }
 
-.categorie-input .selectCategorie:nth-child(1) ~ .selection {
+.category-input .selectCategory:nth-child(1) ~ .selection {
 	transform: translateX(calc(var(--container_width) * 0 / 2));
 }
 
-.categorie-input .selectCategorie:nth-child(2) ~ .selection {
+.category-input .selectCategory:nth-child(2) ~ .selection {
 	transform: translateX(calc(var(--container_width) * 1 / 2));
 }
 
-.categorie-input .pink ~ .selection {
+.category-input .pink ~ .selection {
 	background-color: var(--pink);
 }
-.categorie-input .blue ~ .selection {
+.category-input .blue ~ .selection {
 	background-color: #0441b3;
 }
-.categorie-input .white ~ .selection {
+.category-input .white ~ .selection {
 	background-color: white;
 }
-.categorie-input .white {
+.category-input .white {
 	color: black;
 }

@@ -1,4 +1,4 @@
-import SelectCategorie from './components/Voting/SelectCategorie';
+import SelectCategory from './components/Voting/SelectCategory';
 import SelectContestant from './components/Voting/SelectContestant';
 import './Voting.css';
 import SearchBox from './components/SearchBox';
@@ -50,11 +50,11 @@ const Voting = () => {
 				<h1>Ballkönig/-in</h1>
 				{categories &&
 					categories.map((c, i) => (
-						<SelectCategorie
+						<SelectCategory
 							key={i}
-							setCategorie={setNewCategory}
+							setCategory={setNewCategory}
 							selectedCategories={selectedCategories}
-							categorie={c}
+							category={c}
 						/>
 					))}
 			</nav>
@@ -84,10 +84,13 @@ const Voting = () => {
 							'Spam detected. Stop spamming.'}
 						{display === 'inputCodePage' && (
 							<div>
-								<label htmlFor=''>
+								<label htmlFor='code-input'>
 									Enter your code to your voting
 								</label>
-								<input placeholder='Enter code...'></input>
+								<input
+									id='code-input'
+									placeholder='Enter code...'
+								></input>
 								<button>Submit</button>
 							</div>
 						)}

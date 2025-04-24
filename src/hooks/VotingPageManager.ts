@@ -20,7 +20,7 @@ const VotingPageManager = () => {
 		storeSelectedPerCategory,
 	} = useContestant(selectedCategories);
 	const [display, setDisplay] = useState<page>('loadingPage');
-	const [storeVotedPerCategory, setStoreVotedPerCategorie] = useState<
+	const [storeVotedPerCategory, setStoreVotedPerCategory] = useState<
 		{ categories: string[]; contestantName: string }[]
 	>([]);
 	const [closedMessage, setClosedMessage] = useState('');
@@ -34,17 +34,16 @@ const VotingPageManager = () => {
 			setCurrentVoted(name?.contestantName);
 			setDisplay('votedPage');
 		} else {
-			setDisplay('votingPage');
+			setDisplay('votingPage'); // TODO: is needed for rerendering after switching categories, but overwrites inputCodePage
 			setCurrentVoted(undefined);
 		}
 	}, [selectedCategories, storeVotedPerCategory, renderData]);
 
 	useEffect(() => {
 		const id = getProjectId();
-		if (!id) {
-			setDisplay('inputCodePage');
-		} else if (id === '') {
-			setDisplay('inputCodePage');
+		if (!id || id === '') {
+			window.location.href = '/6807a350b483c60a0b6364eb';
+			// setDisplay('inputCodePage'); TODO: temporary for ball 2025
 		} else {
 			setProjectId(id);
 		}
@@ -58,7 +57,7 @@ const VotingPageManager = () => {
 				solution.forEach((s) => {
 					const res = manageLocalStorage.getVoted(s.split(''));
 					if (res)
-						setStoreVotedPerCategorie((prev) => [
+						setStoreVotedPerCategory((prev) => [
 							...prev,
 							{
 								contestantName: res,
@@ -162,7 +161,7 @@ const VotingPageManager = () => {
 					selectedCategories
 				);
 
-				setStoreVotedPerCategorie([
+				setStoreVotedPerCategory([
 					...storeVotedPerCategory,
 					{
 						categories: selectedCategories,
