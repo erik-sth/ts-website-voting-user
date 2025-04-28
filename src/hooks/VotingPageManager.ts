@@ -29,7 +29,6 @@ const VotingPageManager = () => {
 			setDisplay('votedPage');
 		} else {
 			setDisplay('votingPage'); // TODO: is needed for rerendering after switching categories, but overwrites inputCodePage
-			setCurrentVoted(undefined);
 		}
 	}, [selectedCategories, renderData]);
 
@@ -80,7 +79,7 @@ const VotingPageManager = () => {
 				default:
 					setDisplay('errorLoadingPage');
 			}
-		} 
+		}
 	}, []);
 
 	function backtrack(
