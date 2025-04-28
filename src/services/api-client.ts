@@ -2,7 +2,7 @@ import axios from 'axios';
 import rateLimit from 'axios-rate-limit';
 
 const baseApiClient = axios.create({
-	baseURL: "https://api.misplace.uk",
+	baseURL: "https://api.prod1.uk",
 	withCredentials: true,
 	params: {},
 });

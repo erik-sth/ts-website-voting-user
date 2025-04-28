@@ -4,7 +4,6 @@ import CategoriesProvider from './CategoriesProvider';
 import axios from 'axios';
 import { LocalStorageManager } from './LocalStorageManager';
 import useContestant from './useContestant';
-import { arraysHaveSameValues } from '../utils/array';
 import { Categories } from '../types/project';
 import { page } from '../types/page';
 
@@ -24,20 +23,15 @@ const VotingPageManager = () => {
 		{ categories: string[]; contestantName: string }[]
 	>([]);
 	const [closedMessage, setClosedMessage] = useState('');
-	const [currentVoted, setCurrentVoted] = useState<string>();
 	const manageLocalStorage = new LocalStorageManager(projectId as string);
 	useEffect(() => {
-		const name = storeVotedPerCategory.find((v) =>
-			arraysHaveSameValues(v.categories, selectedCategories)
-		);
-		if (name) {
-			setCurrentVoted(name?.contestantName);
+		if (currentSelected?.votedName) {
 			setDisplay('votedPage');
 		} else {
 			setDisplay('votingPage'); // TODO: is needed for rerendering after switching categories, but overwrites inputCodePage
 			setCurrentVoted(undefined);
 		}
-	}, [selectedCategories, storeVotedPerCategory, renderData]);
+	}, [selectedCategories, renderData]);
 
 	useEffect(() => {
 		const id = getProjectId();
@@ -86,9 +80,7 @@ const VotingPageManager = () => {
 				default:
 					setDisplay('errorLoadingPage');
 			}
-		} else {
-			// Handle other types of errors
-		}
+		} 
 	}, []);
 
 	function backtrack(
@@ -181,8 +173,6 @@ const VotingPageManager = () => {
 		setNewCategory,
 		vote,
 		changeSelectedContestantPerCategory,
-		storeVotedPerCategory,
-		currentVoted,
 		closedMessage,
 	};
 };

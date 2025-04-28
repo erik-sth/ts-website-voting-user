@@ -5,13 +5,14 @@ export interface Contestant {
 	_id: string;
 	name: string;
 	categories: string[];
+	votedName?: string |null
 }
 
 const useContestant = (selectedCategories: string[]) => {
 	const [renderData, setRenderData] = useState<Contestant[]>([]);
 	const [contestants, setContestants] = useState<Contestant[]>([]);
 	const [selectedContestantPerCategorie, setSelectedContestantPerCategorie] =
-		useState<{ categories: string[]; contestant: Contestant }[]>([]);
+		useState<Contestant[]>([]);
 	const [currentSelected, setCurrentSelected] = useState<Contestant>();
 
 	// find if a current selected exists after chaning categories
@@ -19,7 +20,7 @@ const useContestant = (selectedCategories: string[]) => {
 		setCurrentSelected(
 			selectedContestantPerCategorie.find((c) =>
 				arraysHaveSameValues(c.categories, selectedCategories)
-			)?.contestant
+			)
 		);
 	}, [selectedCategories, selectedContestantPerCategorie]);
 
@@ -37,13 +38,9 @@ const useContestant = (selectedCategories: string[]) => {
 	) {
 		setSelectedContestantPerCategorie([
 			...selectedContestantPerCategorie.filter(
-				(c) => !arraysHaveSameValues(c.categories, selectedCategories)
-			),
-			{
-				contestant: newSelectedContesant,
-				categories: selectedCategories,
-			},
-		]);
+				(c) => !arraysHaveSameValues(c.categories, newSelectedContesant.categories)
+			),	newSelectedContesant]);
+
 	}
 
 	return {
@@ -53,6 +50,7 @@ const useContestant = (selectedCategories: string[]) => {
 		setContestants,
 		changeSelectedContestantPerCategory,
 		contestants,
+		setCurrentSelected
 	};
 };
 
