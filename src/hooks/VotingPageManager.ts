@@ -3,9 +3,10 @@ import apiClient from '../services/api-client';
 import CategoriesProvider from './CategoriesProvider';
 import axios from 'axios';
 import { LocalStorageManager } from './LocalStorageManager';
-import useContestant from './useContestant';
+import { arraysHaveSameValues } from '../utils/array';
 import { Categories } from '../types/project';
 import { page } from '../types/page';
+import useContestant from './useContestant';
 
 const VotingPageManager = () => {
 	const [projectId, setProjectId] = useState<string | undefined>(undefined);
@@ -19,24 +20,31 @@ const VotingPageManager = () => {
 		storeSelectedPerCategory,
 	} = useContestant(selectedCategories);
 	const [display, setDisplay] = useState<page>('loadingPage');
-	const [storeVotedPerCategory, setStoreVotedPerCategory] = useState<
+	const [storeVotedPerCategory, setStoreVotedPerCategorie] = useState<
 		{ categories: string[]; contestantName: string }[]
 	>([]);
 	const [closedMessage, setClosedMessage] = useState('');
+	const [currentVoted, setCurrentVoted] = useState<string>();
 	const manageLocalStorage = new LocalStorageManager(projectId as string);
 	useEffect(() => {
-		if (currentSelected?.votedName) {
+		const name = storeVotedPerCategory.find((v) =>
+			arraysHaveSameValues(v.categories, selectedCategories)
+		);
+		if (name) {
+			setCurrentVoted(name?.contestantName);
 			setDisplay('votedPage');
 		} else {
-			setDisplay('votingPage'); // TODO: is needed for rerendering after switching categories, but overwrites inputCodePage
+			setDisplay('votingPage');
+			setCurrentVoted(undefined);
 		}
-	}, [selectedCategories, renderData]);
+	}, [selectedCategories, storeVotedPerCategory, renderData]);
 
 	useEffect(() => {
 		const id = getProjectId();
-		if (!id || id === '') {
-			window.location.href = '/6807a350b483c60a0b6364eb';
-			// setDisplay('inputCodePage'); TODO: temporary for ball 2025
+		if (!id) {
+			setDisplay('inputCodePage');
+		} else if (id === '') {
+			setDisplay('inputCodePage');
 		} else {
 			setProjectId(id);
 		}
@@ -50,7 +58,7 @@ const VotingPageManager = () => {
 				solution.forEach((s) => {
 					const res = manageLocalStorage.getVoted(s.split(''));
 					if (res)
-						setStoreVotedPerCategory((prev) => [
+						setStoreVotedPerCategorie((prev) => [
 							...prev,
 							{
 								contestantName: res,
@@ -79,6 +87,8 @@ const VotingPageManager = () => {
 				default:
 					setDisplay('errorLoadingPage');
 			}
+		} else {
+			// Handle other types of errors
 		}
 	}, []);
 
@@ -124,7 +134,6 @@ const VotingPageManager = () => {
 		try {
 			setDisplay('loadingPage');
 			const res = await apiClient.get(`/categories/${projectId}`);
-
 			setCategories(res.data.categories);
 			return res.data.categories;
 		} catch (error) {
@@ -152,7 +161,7 @@ const VotingPageManager = () => {
 					selectedCategories
 				);
 
-				setStoreVotedPerCategory([
+				setStoreVotedPerCategorie([
 					...storeVotedPerCategory,
 					{
 						categories: selectedCategories,
@@ -172,6 +181,8 @@ const VotingPageManager = () => {
 		setNewCategory,
 		vote,
 		changeSelectedContestantPerCategory,
+		storeVotedPerCategory,
+		currentVoted,
 		closedMessage,
 	};
 };

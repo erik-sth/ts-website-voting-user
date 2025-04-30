@@ -16,6 +16,7 @@ const Voting = () => {
 		renderData,
 		selectedCategories,
 		currentSelected,
+		currentVoted,
 		closedMessage,
 		changeSelectedContestantPerCategory,
 		setNewCategory,
@@ -42,12 +43,11 @@ const Voting = () => {
 	useEffect(() => {
 		filterContestantsByName('');
 	}, [filterContestantsByName, selectedCategories]);
-
 	return (
 		<div className='body container'>
 			<nav className='container'>
 				<h1>Ballkönig/-in</h1>
-				{categories &&
+				{categories.length > 0 &&
 					categories.map((c, i) => (
 						<SelectCategory
 							key={i}
@@ -76,20 +76,17 @@ const Voting = () => {
 				{display !== 'votingPage' && (
 					<div className='voted-c'>
 						{display === 'votedPage' &&
-							currentSelected?.votedName &&
-							`Du hast abgestimmt für ${currentSelected.votedName}.`}
+							currentVoted &&
+							`Du hast abgestimmt für ${currentVoted}.`}
 						{display === 'errorLoadingPage' && closedMessage}
 						{display === 'spamPage' &&
 							'Spam detected. Stop spamming.'}
 						{display === 'inputCodePage' && (
 							<div>
-								<label htmlFor='code-input'>
+								<label htmlFor=''>
 									Enter your code to your voting
 								</label>
-								<input
-									id='code-input'
-									placeholder='Enter code...'
-								></input>
+								<input placeholder='Enter code...'></input>
 								<button>Submit</button>
 							</div>
 						)}
@@ -99,7 +96,7 @@ const Voting = () => {
 			<footer className='container'>
 				{currentSelected &&
 					display === 'votingPage' &&
-					!currentSelected.votedName && (
+					!currentVoted && (
 						<div>
 							<p>Änderung der Wahl nicht möglich.</p>
 							<button className='vote-btn' onClick={vote}>
